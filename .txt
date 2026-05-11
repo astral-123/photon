@@ -1,0 +1,140 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/astral-123/photon/refs/heads/main/.lua"))()
+
+local Window = Library:CreateWindow("photon", Vector2.new(960, 580), Enum.KeyCode.RightShift)
+
+-- ══════════════════════════════════════════
+--              AIMBOT TAB
+-- ══════════════════════════════════════════
+local AimbotTab = Window:CreateTab("Aimbot")
+
+-- Sous-onglets sidebar
+local AimbotSub    = AimbotTab:CreateSubTab("Aimbot")
+local SilentSub    = AimbotTab:CreateSubTab("Silent")
+local TriggerSub   = AimbotTab:CreateSubTab("Triggerbot")
+
+-- ── Aimbot > Main
+local MainSection = AimbotSub:CreateSector("Main")
+
+local AimbotToggle = MainSection:AddToggle("Enabled", false, function(value)
+    -- logic ici
+end, "AimbotEnabled")
+AimbotToggle:AddKeybind(Enum.KeyCode.E, "AimbotKeybind")
+
+MainSection:AddDropdown("Hit Part",  {"Head","Torso","HumanoidRootPart"}, "Head",   false, function(v) end, "AimbotHitPart")
+MainSection:AddDropdown("Air Part",  {"None","Head","Torso"},             "None",   false, function(v) end, "AimbotAirPart")
+MainSection:AddDropdown("Method",    {"Camera","Mouse","Silent"},         "Camera", false, function(v) end, "AimbotMethod")
+MainSection:AddToggle("Sticky Aim", false, function(v) end, "StickyAim")
+MainSection:AddToggle("Blatant Mode", false, function(v) end, "BlatantMode")
+MainSection:AddSlider("FOV",         0,   0,  360, 1, function(v) end, "AimbotFOV")
+MainSection:AddSlider("Deadzone",    0,   0,  50,  1, function(v) end, "AimbotDeadzone")
+MainSection:AddSlider("Shake Value", 0,   0,  10,  1, function(v) end, "AimbotShake")
+
+-- ── Aimbot > Smoothness
+local SmoothnessSection = AimbotSub:CreateSector("Smoothness")
+
+SmoothnessSection:AddSlider("Smoothness X",      0, 3, 20, 1, function(v) end, "SmoothX")
+SmoothnessSection:AddSlider("Smoothness Y",      0, 3, 20, 1, function(v) end, "SmoothY")
+SmoothnessSection:AddSlider("Velocity Power",    0, 3, 20, 1, function(v) end, "VelocityPower")
+SmoothnessSection:AddDropdown("Aimbot Type", {"Normal","Bezier","Linear"}, "Normal", false, function(v) end, "AimbotType")
+
+-- ── Aimbot > Prediction
+local PredSection = AimbotSub:CreateSector("Prediction")
+
+PredSection:AddToggle("Enabled", false, function(v) end, "PredEnabled")
+PredSection:AddDropdown("Prediction Method", {"Normal","Velocity","Custom"}, "Normal", false, function(v) end, "PredMethod")
+PredSection:AddToggle("Stabilization", false, function(v) end, "PredStab")
+PredSection:AddSlider("Stabilization Value", 0, 3, 20, 1, function(v) end, "PredStabVal")
+
+-- ── Aimbot > Settings
+local SettingsSection = AimbotSub:CreateSector("Settings")
+
+SettingsSection:AddToggle("Dynamic FOV",  false, function(v) end, "DynFOV")
+SettingsSection:AddToggle("Advanced FOV", false, function(v) end, "AdvFOV")
+SettingsSection:AddToggle("Thirdperson",  true,  function(v) end, "ThirdPerson")
+SettingsSection:AddToggle("Firstperson",  true,  function(v) end, "FirstPerson")
+SettingsSection:AddSlider("Jump Value",   0, 0, 10, 0.1, function(v) end, "JumpVal")
+SettingsSection:AddSlider("Fall Value",   0, 0, 10, 0.1, function(v) end, "FallVal")
+
+-- ── Silent sub
+local SilentSection = SilentSub:CreateSector("Silent Aim")
+SilentSection:AddToggle("Enabled", false, function(v) end, "SilentEnabled")
+SilentSection:AddSlider("FOV",     0, 60, 360, 1, function(v) end, "SilentFOV")
+SilentSection:AddDropdown("Hit Part", {"Head","Torso","HumanoidRootPart"}, "Head", false, function(v) end, "SilentHitPart")
+
+-- ── Triggerbot sub
+local TriggerSection = TriggerSub:CreateSector("Triggerbot")
+local TriggerToggle  = TriggerSection:AddToggle("Enabled", false, function(v) end, "TriggerEnabled")
+TriggerToggle:AddKeybind(Enum.KeyCode.T, "TriggerKeybind")
+TriggerSection:AddSlider("Delay (ms)", 0, 50, 500, 1, function(v) end, "TriggerDelay")
+
+-- ══════════════════════════════════════════
+--              VISUALS TAB
+-- ══════════════════════════════════════════
+local VisualsTab = Window:CreateTab("Visuals")
+
+local ESPSub   = VisualsTab:CreateSubTab("ESP")
+local ChamsSub = VisualsTab:CreateSubTab("Chams")
+
+local ESPSection = ESPSub:CreateSector("ESP")
+ESPSection:AddToggle("Enabled",    false, function(v) end, "ESPEnabled")
+ESPSection:AddToggle("Box",        false, function(v) end, "BoxESP")
+ESPSection:AddToggle("Name",       false, function(v) end, "NameESP")
+ESPSection:AddToggle("Health Bar", false, function(v) end, "HealthBar")
+ESPSection:AddColorpicker("Box Color",  Color3.fromRGB(232,51,58), function(c) end, "BoxColor")
+ESPSection:AddColorpicker("Name Color", Color3.fromRGB(255,255,255), function(c) end, "NameColor")
+ESPSection:AddSlider("Max Distance", 0, 1000, 5000, 1, function(v) end, "ESPDist")
+
+local ChamsSection = ChamsSub:CreateSector("Chams")
+ChamsSection:AddToggle("Enabled", false, function(v) end, "ChamsEnabled")
+ChamsSection:AddDropdown("Style", {"Neon","Glass","ForceField"}, "Neon", false, function(v) end, "ChamsStyle")
+ChamsSection:AddColorpicker("Visible Color",   Color3.fromRGB(232,51,58), function(c) end, "ChamsVis")
+ChamsSection:AddColorpicker("Invisible Color", Color3.fromRGB(80,80,80),  function(c) end, "ChamsInvis")
+
+-- ══════════════════════════════════════════
+--              MISC TAB
+-- ══════════════════════════════════════════
+local MiscTab = Window:CreateTab("Misc")
+
+local PlayerSub = MiscTab:CreateSubTab("Player")
+local InfoSub   = MiscTab:CreateSubTab("Info")
+
+local PlayerSection = PlayerSub:CreateSector("Player")
+PlayerSection:AddToggle("Infinite Jump", false, function(v) end, "InfJump")
+PlayerSection:AddToggle("No Clip",       false, function(v) end, "NoClip")
+PlayerSection:AddSlider("Walk Speed",  16, 16,  100, 1, function(v)
+    local char = game.Players.LocalPlayer.Character
+    if char then local h = char:FindFirstChildOfClass("Humanoid") ; if h then h.WalkSpeed = v end end
+end, "WalkSpeed")
+PlayerSection:AddSlider("Jump Power",  50, 50,  200, 1, function(v)
+    local char = game.Players.LocalPlayer.Character
+    if char then local h = char:FindFirstChildOfClass("Humanoid") ; if h then h.JumpPower = v end end
+end, "JumpPower")
+
+local InfoSection2 = InfoSub:CreateSector("Info")
+InfoSection2:AddLabel("Discord: .gg/ty9qwSr6Ya", Color3.fromRGB(180,180,180))
+InfoSection2:AddLabel("Version: 1.0.0",           Color3.fromRGB(130,130,130))
+InfoSection2:AddSeparator("Links")
+InfoSection2:AddButton("Copy Discord", function()
+    setclipboard("https://discord.gg/ty9qwSr6Ya")
+end)
+
+-- ══════════════════════════════════════════
+--              SCRIPTS TAB
+-- ══════════════════════════════════════════
+local ScriptsTab = Window:CreateTab("Scripts")
+local ExecSub    = ScriptsTab:CreateSubTab("Execute")
+local ExecSection = ExecSub:CreateSector("Execute")
+
+ExecSection:AddTextbox("Script URL", nil, function(v) end, "ScriptURL")
+ExecSection:AddButton("Load Script", function()
+    local url = Library.flags["ScriptURL"]
+    if url and url ~= "" then
+        local ok, err = pcall(function() loadstring(game:HttpGet(url))() end)
+        if not ok then Window:Notify("Erreur", "Impossible de charger.", 4) end
+    else
+        Window:Notify("Erreur", "Entre une URL valide.", 4)
+    end
+end)
+
+-- ══════════════════════════════════════════
+Window:Notify("Photon", "Script chargé avec succès.", 5)
